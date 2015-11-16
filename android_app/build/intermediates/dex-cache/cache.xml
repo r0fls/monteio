@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/r0fls/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
+        <dex dex="/home/r0fls/AndroidStudioProjects/MyApplication2/app/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-f118ab51fc988aa4b13e55468a9cae0a7ccfa754.jar" />
+    </item>
+    <item
+        jar="/home/r0fls/AndroidStudioProjects/MyApplication2/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
+        <dex dex="/home/r0fls/AndroidStudioProjects/MyApplication2/app/build/intermediates/pre-dexed/debug/classes-44172b49423fcd460c6168d76abc9ccfa674d948.jar" />
+    </item>
+    <item
+        jar="/home/r0fls/AndroidStudioProjects/MyApplication2/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/libs/internal_impl-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
+        <dex dex="/home/r0fls/AndroidStudioProjects/MyApplication2/app/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-dc8bb2f6e150df88d7e29c506de175d44daae4ed.jar" />
+    </item>
+    <item
+        jar="/home/r0fls/AndroidStudioProjects/MyApplication2/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
+        <dex dex="/home/r0fls/AndroidStudioProjects/MyApplication2/app/build/intermediates/pre-dexed/debug/classes-416e93c8a3129dfca9699fb677c9e7c93ac0f309.jar" />
+    </item>
+
+</items>
