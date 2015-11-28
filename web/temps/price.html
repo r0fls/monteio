@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+Price a Stock Option using Monte Carlo Analysis
+
+    <label for="Data">Ticker: </label> </br>
+    <input id="ticker" type="text" name="ticker" value="AAPL"></br>
+    <input id="days" type="text" name="days" value="31"> </br>
+    <input id="strike" type="text" name="strike" value="120.00"></br>
+    <button id='submit'>submit</button>
+    <div id='results'>Response</div>
+<script type="text/javascript">
+$('#submit').click(function(){
+        $.ajax({url: "/accounts/price", 
+             data:{'ticker':$('#ticker').val(),'days':$('#days').val(),'strike':$('#strike').val()}, 
+            success:function(data) {
+          console.log(data);
+          if (Object.keys(data).length == 1){
+          for (key in data){
+          $( "#results" ).append('</br><b>'+key+': $'+data[key]+'</b>');}}
+          }});
+        });
+</script>
+{% endblock %}
+
