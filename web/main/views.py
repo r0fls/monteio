@@ -28,10 +28,16 @@ def price(request):
     days = int(request.GET.get('days', ''))
     strike = float(request.GET.get('strike', ''))
     ticker = request.GET.get('ticker','').upper()
+    putcall = request.GET.get('type','')
     f = futurePrice.futurePrice(request.GET.get('ticker', ''))
+    #import pdb;pdb.set_trace()
     x = 0
     for i in range(ITERATIONS):
-        x = x + futurePrice.price(f, days, strike)
+        x = x + futurePrice.price(f, days, strike,putcall[0])
     value = x / ITERATIONS
-    response_data = {'ticker':str(ticker),'days':str(days),'strike':str(strike),'price':round(value,3)}
+    response_data = {'ticker':str(ticker),
+                     'days':str(days),
+                     'strike':str(strike),
+                     'type':putcall,
+                     'price':round(value,3)}
     return JsonResponse(response_data)
