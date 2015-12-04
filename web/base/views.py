@@ -1,7 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 
 def home(request):
-    return render(request,'price.html')
+    if request.user.is_authenticated():
+        return render(request,'price.html')
+    else:
+        return redirect('/accounts/login/')
 
 def register(request):
     return render(request,'registration/registration_form.html')

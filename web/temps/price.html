@@ -1,43 +1,13 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load staticfiles %}
+
 {% block content %}
+<link rel="stylesheet" href="{% static "price-style.css" %}" />
 
-<style>
-#form{
-    margin-bottom: 35px;
-}
-input, select {
-        width: 200px;
-        min-height: 16px;
-        border: 1px solid #000;
-        display: inline-block;
-        margin: 5px;
-        }
-
-label {
-        width: 40px;
-        min-height: 16px;
-        display: inline-block;
-        margin: 5px;
-        }
-th {
-        width: 55px;
-        min-height: 16px;
-        border: 1px solid #000;
-        margin: 5px;
-        }
-#results{
-        margin:5px;
-}
-#button {
-    width: 280px;
-    text-align:center;
-}
-
-
-</style>
 <div id="outer">
-    <div id="inner">
+    <div id="wrapper">
+    <div id="inner"
     Price a Stock Option using Monte Carlo Analysis
     </br>
     <div id = "form">
@@ -46,6 +16,7 @@ th {
              <option value="Call">Call</option>
              <option value="Put">Put</option>
         </select></br>
+        <div class="form-group">
         <label for="ticker">Ticker: </label>
         <input id="ticker" type="text" name="ticker" value="AAPL"></br>
         <label for="days">Days: </label>
@@ -56,7 +27,8 @@ th {
     </div>
         <div id='results'>
           <p><a href="#" class="export btn btn-success btn-sm">Export</a></p>
-        <table id='result' border="1">
+          <div class="table-responsive">
+        <table id='result' class="table table-hover table-condensed" border="1">
             <tbody>
             <tr>
                 <th>Ticker</th>
@@ -68,7 +40,10 @@ th {
         </tbody>
     </table>
   </div>
+  </div>
  </div>
+</div>
+</div>
 </div>
 <script type="text/javascript">
 $('#submit').click(function(){
