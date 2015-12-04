@@ -3,6 +3,9 @@
 {% block content %}
 
 <style>
+#form{
+    margin-bottom: 40px;
+}
 input {
         width: 200px;
         min-height: 16px;
@@ -26,6 +29,7 @@ th {
     width: 280px;
     text-align:center;
 }
+
 </style>
 
 Price a Stock Option using Monte Carlo Analysis
@@ -37,9 +41,10 @@ Price a Stock Option using Monte Carlo Analysis
     <input id="days" type="text" name="days" value="31"> </br>
     <label for="strike">Strike: </label>
     <input id="strike" type="text" name="strike" value="120.00"></br>
-    <div id="button"> <button id='submit'>submit</button></div>
+    <div id="button"> <button id='submit' class="btn btn-primary">submit</button></div>
 </div>
-    <div id='results'>Response</div>
+    <div id='results'>
+      <p><a href="#" class="export btn btn-success btn-sm">Export</a></p>
     <table id='result' border="1">
         <tbody>
         <tr>
@@ -50,17 +55,71 @@ Price a Stock Option using Monte Carlo Analysis
         </tr>
         </tbody>
     </table>
+  </div>
 <script type="text/javascript">
 $('#submit').click(function(){
         $.ajax({url: "/accounts/price",
              data:{'ticker':$('#ticker').val(),'days':$('#days').val(),'strike':$('#strike').val()},
             success:function(data) {
-          console.log(data);
-          if (Object.keys(data).length == 1){
-          for (key in data){
-          $( "#results" ).append('</br><b>'+key+': $'+data[key]+'</b>');}}
-          $('#result > tbody:last-child').append('<tr><td>'+data["ticker"]+'</td><td>'+data["days"]+'</td><td>'+data["strike"]+'</td><td>'+data["price"]+'</td></tr>');
+          $('#result > tbody:last-child').append('<tr><td>'+data["ticker"]+
+              '</td><td>'+data["days"]+'</td><td>'+data["strike"]+'</td><td>'+
+                  data["price"]+'</td></tr>');
           }});
         });
+
+$(document).ready(function () {
+
+    function exportTableToCSV($table, filename) {
+
+        var $rows = $table.find('tr:has(td),tr:has(th)'),
+
+
+            // Temporary delimiter characters unlikely to be typed by keyboard
+            // This is to avoid accidentally splitting the actual contents
+            tmpColDelim = String.fromCharCode(11), // vertical tab character
+            tmpRowDelim = String.fromCharCode(0), // null character
+
+            // actual delimiter characters for CSV format
+            colDelim = '","',
+            rowDelim = '"\r\n"',
+
+            // Grab text from table into CSV formatted string
+            csv = '"' + $rows.map(function (i, row) {
+                var $row = $(row),
+                    //$header = $row.find('th');
+                    $cols = $row.find('th,td');
+
+                return $cols.map(function (j, col) {
+                    var $col = $(col),
+                        text = $col.text();
+
+                    return text.replace(/"/g, '""'); // escape double quotes
+
+                }).get().join(tmpColDelim);
+
+            }).get().join(tmpRowDelim)
+                .split(tmpRowDelim).join(rowDelim)
+                .split(tmpColDelim).join(colDelim) + '"',
+
+            // Data URI
+            csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
+
+        $(this)
+            .attr({
+            'download': filename,
+                'href': csvData,
+                'target': '_blank'
+        });
+    }
+
+    // This must be a hyperlink
+    $(".export").on('click', function (event) {
+        // CSV
+        exportTableToCSV.apply(this, [$('#results>table'), 'export.csv']);
+
+        // IF CSV, don't do event.preventDefault() or return false
+        // We actually need this to be a typical hyperlink
+    });
+});
 </script>
 {% endblock %}
