@@ -25,14 +25,13 @@ def adduser(request):
 
 @login_required
 def price(request):
-    #if request.method == 'POST':
-        days = int(request.GET.get('days', ''))
-        strike = float(request.GET.get('strike', ''))
-        ticker = request.GET.get('ticker','')
-        f = futurePrice.futurePrice(request.GET.get('ticker', ''))
-        x = 0
-        for i in range(ITERATIONS):
-            x = x + futurePrice.price(f, days, strike)
-        value = x / ITERATIONS
-        response_data = {str(ticker)+str(days)+str(strike):round(value,3)}
-        return JsonResponse(response_data)
+    days = int(request.GET.get('days', ''))
+    strike = float(request.GET.get('strike', ''))
+    ticker = request.GET.get('ticker','').upper()
+    f = futurePrice.futurePrice(request.GET.get('ticker', ''))
+    x = 0
+    for i in range(ITERATIONS):
+        x = x + futurePrice.price(f, days, strike)
+    value = x / ITERATIONS
+    response_data = {'ticker':str(ticker),'days':str(days),'strike':str(strike),'price':round(value,3)}
+    return JsonResponse(response_data)

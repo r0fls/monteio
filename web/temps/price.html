@@ -1,25 +1,66 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-Price a Stock Option using Monte Carlo Analysis
 
-    <label for="Data">Ticker: </label> </br>
+<style>
+input {
+        width: 200px;
+        min-height: 16px;
+        border: 1px solid #000;
+        display: inline-block;
+        margin: 5px;
+        }
+label {
+        width: 40px;
+        min-height: 16px;
+        display: inline-block;
+        margin: 5px;
+        }
+th {
+        width: 80px;
+        min-height: 16px;
+        border: 1px solid #000;
+        margin: 5px;
+        }
+#button {
+    width: 280px;
+    text-align:center;
+}
+</style>
+
+Price a Stock Option using Monte Carlo Analysis
+</br>
+<div id = "form">
+    <label for="ticker">Ticker: </label>
     <input id="ticker" type="text" name="ticker" value="AAPL"></br>
+    <label for="days">Days: </label>
     <input id="days" type="text" name="days" value="31"> </br>
+    <label for="strike">Strike: </label>
     <input id="strike" type="text" name="strike" value="120.00"></br>
-    <button id='submit'>submit</button>
+    <div id="button"> <button id='submit'>submit</button></div>
+</div>
     <div id='results'>Response</div>
+    <table id='result' border="1">
+        <tbody>
+        <tr>
+            <th>Ticker</th>
+            <th>Days</th>
+            <th>Strike</th>
+            <th>Price</th>
+        </tr>
+        </tbody>
+    </table>
 <script type="text/javascript">
 $('#submit').click(function(){
-        $.ajax({url: "/accounts/price", 
-             data:{'ticker':$('#ticker').val(),'days':$('#days').val(),'strike':$('#strike').val()}, 
+        $.ajax({url: "/accounts/price",
+             data:{'ticker':$('#ticker').val(),'days':$('#days').val(),'strike':$('#strike').val()},
             success:function(data) {
           console.log(data);
           if (Object.keys(data).length == 1){
           for (key in data){
           $( "#results" ).append('</br><b>'+key+': $'+data[key]+'</b>');}}
+          $('#result > tbody:last-child').append('<tr><td>'+data["ticker"]+'</td><td>'+data["days"]+'</td><td>'+data["strike"]+'</td><td>'+data["price"]+'</td></tr>');
           }});
         });
 </script>
 {% endblock %}
-
