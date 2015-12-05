@@ -20,8 +20,12 @@ label {
         margin:5px;
         width:300px;
 }
+
 #button {
     width: 300px;
     text-align:center;
-    margin-bottom: 50px;
+    margin-bottom: 70px;
+}
+#export {
+  text-align: right;
 }
