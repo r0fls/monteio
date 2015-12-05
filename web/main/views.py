@@ -6,6 +6,7 @@ from monte import futurePrice
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import json
+from models import UserProfile
 
 # Iterations for Monte carlo simulation
 ITERATIONS = 100
@@ -25,6 +26,9 @@ def adduser(request):
 
 @login_required
 def price(request):
+    if not request.user.is_superuser:
+        profile = UserProfile.objects.get(user=request.user)
+        profile.calls -= 1
     days = int(request.GET.get('days', ''))
     strike = float(request.GET.get('strike', ''))
     ticker = request.GET.get('ticker','').upper()
