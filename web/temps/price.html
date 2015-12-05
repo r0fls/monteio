@@ -26,7 +26,7 @@
     </div>
         <div id='results'>
           <p><a href="#" class="export btn btn-success btn-sm">Export</a></p>
-          <div class="table-responsive">
+          <div id="table" class="table-responsive">
         <table id='result' class="table table-hover table-condensed" border="1">
             <tbody>
             <tr>
@@ -106,7 +106,7 @@ $(document).ready(function () {
     // This must be a hyperlink
     $(".export").on('click', function (event) {
         // CSV
-        exportTableToCSV.apply(this, [$('#results>table'), 'export.csv']);
+        exportTableToCSV.apply(this, [$('#table>table'), 'export.csv']);
 
         // IF CSV, don't do event.preventDefault() or return false
         // We actually need this to be a typical hyperlink
