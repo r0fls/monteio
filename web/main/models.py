@@ -5,7 +5,7 @@ from dateutil import relativedelta
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    calls = models.IntegerField()
+    calls = models.IntegerField(default=5)
     #months = relativedelta(datetime.datetime.now(),user.date_joined())
 
 # Create your models here.

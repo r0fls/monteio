@@ -33,7 +33,7 @@ def prod(iterable):
 
 
 def price(futurePrice, days, strike, flag='C'):
-    changes = laplace.rvs(0, futurePrice.var, size=days)
+    changes = laplace.rvs(0, futurePrice.var, size=days*5/7)
     values = exp(changes)
     daily = [float(futurePrice.price) * prod(values[0:i + 1])
              for i in range(len(values))]

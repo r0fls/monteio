@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from views import home, register
-from main.views import price
+from main.views import price, adduser
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -26,6 +26,6 @@ urlpatterns = [
     url('^$', home, name='index'),
     url('^accounts/profile', home),
     url('^accounts/price', price),
-    url('^register/',register,name='register'),
+    url('^register/',adduser,name='register'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
