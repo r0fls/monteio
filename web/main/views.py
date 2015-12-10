@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from forms import UserForm
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 from django.http import HttpResponseRedirect, HttpResponse
 from monte import futurePrice
 from django.contrib.auth.decorators import login_required
@@ -20,8 +20,10 @@ def adduser(request):
         if form.is_valid():
             new_user = User.objects.create_user(**form.cleaned_data)
             up = UserProfile.objects.create(user=new_user)
-            login(request,new_user)
-            return redirect('main.html')
+            new_user = authenticate(username=request.POST['username'],
+                                    password=request.POST['password'])
+            login(request, new_user)
+            return redirect('../accounts/profile')
     else:
         form = UserForm()
 
@@ -31,10 +33,12 @@ def adduser(request):
 def price(request):
     if not request.user.is_superuser:
         profile = UserProfile.objects.get(user=request.user)
+        calls = profile.calls
         if profile.calls > 0:
             profile.calls -= 1
+            profile.save()
         else:
-            return redirect('home.html')
+            return redirect('purchase.html')
     days = int(request.GET.get('days', ''))
     strike = float(request.GET.get('strike', ''))
     ticker = request.GET.get('ticker','').upper()
@@ -49,5 +53,6 @@ def price(request):
                      'days':str(days),
                      'strike':str(strike),
                      'type':putcall,
-                     'price':round(value,3)}
+                     'price':round(value,3),
+                     'calls':calls}
     return JsonResponse(response_data)
