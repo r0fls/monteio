@@ -7,6 +7,10 @@ from dateutil.relativedelta import relativedelta
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     calls = models.IntegerField(default=0)
+    
+    def __unicode__(self):
+        return self.user.username
+
 
     def get_remaining(self):
         return 5 + relativedelta(
