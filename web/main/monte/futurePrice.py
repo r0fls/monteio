@@ -1,5 +1,5 @@
 from params import getParams
-from scipy.stats import laplace
+from scipy.stats import laplace, norm
 from ystockquote import get_price
 from operator import mul
 from numpy import exp
@@ -17,8 +17,11 @@ class futurePrice():
         self.vol = params[1]
         self.price = get_price(self.ticker)
 
-    def futurePrice(self, days, strike, flag='C'):
-        changes = laplace.rvs(0, self.var, size=days)
+    def futurePrice(self, days, strike, flag='C', model = 'laplace'):
+        if 'laplace' in model:
+            changes = laplace.rvs(0, self.var, size=days)
+        elif 'norm' in model:
+            changes = norm.rvs(0, self.var, size=days)
         values = exp(changes)
         self.daily = [float(self.price) * prod(values[0:i + 1])
                       for i in range(len(values))]
@@ -32,8 +35,12 @@ def prod(iterable):
 # functional version for parallel proccessing
 
 
-def price(futurePrice, days, strike, flag='C'):
-    changes = laplace.rvs(0, futurePrice.var, size=days*5/7)
+def price(futurePrice, days, strike, flag='C', model = 'laplace'):
+    if 'laplace' in model:
+        changes = laplace.rvs(0, futurePrice.var, size=days*5/7)
+    elif 'norm' in model:
+        changes = norm.rvs(0, futurePrice.var, size=days*5/7)
+
     values = exp(changes)
     daily = [float(futurePrice.price) * prod(values[0:i + 1])
              for i in range(len(values))]

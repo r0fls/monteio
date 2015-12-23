@@ -44,6 +44,7 @@ def price(request):
             return redirect('purchase.html')
     else:
         calls = 0
+    model = str(request.GET.get('model','laplace'))
     days = int(request.GET.get('days', ''))
     strike = float(request.GET.get('strike', ''))
     ticker = request.GET.get('ticker', '').upper()
@@ -51,7 +52,7 @@ def price(request):
     f = futurePrice.futurePrice(request.GET.get('ticker', ''))
     x = 0
     for i in range(ITERATIONS):
-        x = x + futurePrice.price(f, days, strike, putcall[0])
+        x = x + futurePrice.price(f, days, strike, putcall[0], model)
     value = x / ITERATIONS
     response_data = {'ticker': str(ticker),
                      'days': str(days),
